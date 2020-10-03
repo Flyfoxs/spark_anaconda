@@ -1,0 +1,9 @@
+nohup.out
+.ipynb_checkpoints
+*.log
+download
+.idea
+instance_*.properties
+bin/deploy.sh
+tmp/*
+.DS_Store

@@ -1,0 +1,29 @@
+FROM bde2020/spark-master:2.4.5-hadoop2.7
+# https://github.com/big-data-europe/docker-spark/blob/2.4.5-hadoop2.7/base/Dockerfile
+
+ARG CONDA_DIR="/opt/conda"
+ENV PATH "$CONDA_DIR/bin:$PATH"
+RUN echo "**** install Anaconda3 ****" && \
+    apk del curl python3 libc6-compat py-pip && \
+    # wget http://10.0.2.55:60001/other/Anaconda3-5.0.1-Linux-x86_64.sh && \
+    wget https://repo.anaconda.com/archive/Anaconda3-5.0.1-Linux-x86_64.sh
+
+ENV GLIBC_VERSION=2.29-r0
+
+RUN apk add --update curl && \
+  apk del libc6-compat && \
+  curl -Lo /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+  curl -Lo glibc.apk "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" && \
+  curl -Lo glibc-bin.apk "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk"
+
+RUN apk add --update curl && \
+  apk add glibc-bin.apk glibc.apk && \
+  /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
+  echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
+  apk del curl python3 py-pip && \
+  rm -rf glibc.apk glibc-bin.apk /var/cache/apk/*NAME
+
+RUN bash Anaconda3-5.0.1-Linux-x86_64.sh -f -b -p "$CONDA_DIR" && \
+    rm -rf Anaconda3-5.0.1-Linux-x86_64.sh
+
+
