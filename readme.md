@@ -29,7 +29,7 @@ docker exec -it -e PYSPARK_PYTHON=python3 spark-master  /spark/bin/pyspark
 import pandas as pd
 csv_url = 'https://raw.githubusercontent.com/cs109/2014_data/master/countries.csv'
 pandas_df = pd.read_csv(csv_url)
-df.head()
+pandas_df.head()
 
 #转换为Spark Dataframe
 spark_df = spark.createDataFrame(pandas_df)
