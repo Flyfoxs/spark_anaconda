@@ -1,8 +1,8 @@
 ## 0 Summary
 
-目前能找到的Spark集群, 如果是想使用Python来开发Spark. 
+目前能找到的Spark集群, 在使用Python开发时会发现缺少很多Python依赖包. 
 
-在Repo中, 通过删除一些冲突的包,补充一些依赖包,成功安装融合了Anaconda3
+在本Repo中, 通过删除一些冲突的包, 补充一些依赖包, 成功安装融合了Anaconda3
 
 
 
